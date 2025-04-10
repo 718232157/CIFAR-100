@@ -22,21 +22,21 @@
 
 ## 环境要求
 
-- Python 3.8+
-- PyTorch 1.9+
-- Streamlit 1.12+
 - 其他依赖见`requirements.txt`
 
 
 
 ## 运行应用
-
+拉取代码到本地按照运行以下命令
 ```bash
 cd cifar100_app
 streamlit run app.py
 ```
 
 应用将在本地启动，访问浏览器中的`http://localhost:8501`即可使用。
+或访问：https://dream-ten.streamlit.app/ (注：此网站由于是免费资源提供，模型较大，所用内存较多，提供的免费资源如下：1个cpu核心，1G内存。请错峰使用)
+
+
 
 ## 项目结构
 
@@ -97,3 +97,5 @@ CIFAR-100是一个包含100个类别的图像分类数据集，每个类别有60
    - 懒加载减少初始加载时间
    - 优化页面刷新逻辑
    - 使用缓存避免重复渲染
+
+
