@@ -12,6 +12,11 @@
 | 训练源码与日志 | [Kaggle Notebook](https://www.kaggle.com/code/hepingyang/cifar-100-convnext-vit-hybrid-classifier) | 可查看模型结构、训练策略、运行日志与版本记录 |
 | 模型权重 | [GitHub Release](https://github.com/718232157/CIFAR-100/releases/tag/v1.0.0) / [Kaggle Output](https://www.kaggle.com/code/hepingyang/cifar-100-convnext-vit-hybrid-classifier/output) | `best_model.pth`，约 455.4 MB |
 
+> [!IMPORTANT]
+> **Kaggle 运行状态说明**
+>
+> Kaggle 页面显示的 `Cancelled after 12 hours` 是单次 GPU 运行达到平台 12 小时时长上限，并非 Python 异常或训练逻辑报错。该版本的公开运行元数据为 `exception: false`；任务在平台终止前已完成第 45 轮训练，取得 **87.25% Top-1 Accuracy**，最佳模型权重也已在训练过程中正常保存。
+
 ## 模型与训练
 
 ### 模型结构
