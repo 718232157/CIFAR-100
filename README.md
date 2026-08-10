@@ -8,7 +8,7 @@
 
 | 内容 | 地址 | 说明 |
 | --- | --- | --- |
-| 在线演示 | Streamlit Community Cloud（重新部署中） | 免费实例长时间无访问会休眠，进入后可手动唤醒 |
+| 在线演示 | [Streamlit Community Cloud](https://cifar100-convnext-vit.streamlit.app/) | 免费实例长时间无访问会休眠，进入后可手动唤醒 |
 | 训练源码与日志 | [Kaggle Notebook](https://www.kaggle.com/code/hepingyang/cifar-100-convnext-vit-hybrid-classifier) | 可查看模型结构、训练策略、运行日志与版本记录 |
 | 模型权重 | [GitHub Release](https://github.com/718232157/CIFAR-100/releases/tag/v1.0.0) / [Kaggle Output](https://www.kaggle.com/code/hepingyang/cifar-100-convnext-vit-hybrid-classifier/output) | `best_model.pth`，约 455.4 MB |
 
