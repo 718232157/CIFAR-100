@@ -92,7 +92,7 @@ pip install -r requirements.txt
 kaggle kernels output hepingyang/cifar-100-convnext-vit-hybrid-classifier -p .
 ```
 
-仓库使用 Git LFS 记录模型文件，但当前 GitHub LFS 下载不可用。普通 Git 克隆得到的 `best_model.pth` 可能只是 LFS 指针文件，应用会自动识别并从 Release 获取经过 SHA-256 校验的完整权重。
+旧版本曾使用 Git LFS 记录模型文件，但由于 LFS 下载不可用，当前仓库不再直接跟踪大体积权重。应用会从 Release 获取经过 SHA-256 校验的完整文件。
 
 ### 4. 启动应用
 
@@ -111,8 +111,7 @@ CIFAR-100/
 ├── components/             # 上传、预测、历史、导出、反馈等 UI 组件
 ├── utils/                  # 数据库、图像处理和样式工具
 ├── data/                   # 应用运行数据目录
-├── requirements.txt        # Python 依赖
-└── best_model.pth          # 模型权重（Git LFS 指针）
+└── requirements.txt        # Python 依赖
 ```
 
 ## 项目定位与边界
