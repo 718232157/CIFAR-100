@@ -1,5 +1,7 @@
 import streamlit as st
 import os
+import hashlib
+import urllib.request
 import torch
 from PIL import Image
 
@@ -24,17 +26,59 @@ st.set_page_config(
 # 应用全局CSS样式
 st.markdown(f"<style>{get_all_css()}</style>", unsafe_allow_html=True)
 
-# 初始化会话状态
+MODEL_PATH = "best_model.pth"
+MODEL_URL = "https://github.com/718232157/CIFAR-100/releases/download/v1.0.0/best_model.pth"
+MODEL_SIZE = 455397781
+MODEL_SHA256 = "a5bd01d6e8cc0227094b88421256037059b1c3cef29e62143190fa94be2729ea"
+
+
+def _sha256(path):
+    digest = hashlib.sha256()
+    with open(path, "rb") as model_file:
+        for chunk in iter(lambda: model_file.read(8 * 1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def ensure_model_file():
+    """Download and verify the public release checkpoint when it is absent."""
+    if (
+        os.path.exists(MODEL_PATH)
+        and os.path.getsize(MODEL_PATH) == MODEL_SIZE
+        and _sha256(MODEL_PATH) == MODEL_SHA256
+    ):
+        return MODEL_PATH
+
+    temporary_path = f"{MODEL_PATH}.download"
+    if os.path.exists(temporary_path):
+        os.remove(temporary_path)
+
+    urllib.request.urlretrieve(MODEL_URL, temporary_path)
+
+    if os.path.getsize(temporary_path) != MODEL_SIZE or _sha256(temporary_path) != MODEL_SHA256:
+        os.remove(temporary_path)
+        raise RuntimeError("模型文件完整性校验失败，请稍后重试。")
+
+    os.replace(temporary_path, MODEL_PATH)
+    return MODEL_PATH
+
+
+@st.cache_resource(show_spinner=False)
+def get_cached_model():
+    model_path = ensure_model_file()
+    return load_model(model_path)
+
+
+# 模型在进程内只加载一次，避免 Streamlit 重跑重复占用内存。
 if 'model' not in st.session_state:
-    # 模型路径，根据实际情况修改
-    model_path = "best_model.pth"
-    
-    # 检查模型文件是否存在
-    if os.path.exists(model_path):
-        st.session_state.model, st.session_state.device = load_model(model_path)
+    try:
+        with st.spinner("首次启动正在下载并加载模型，约 455 MB，请稍候……"):
+            st.session_state.model, st.session_state.device = get_cached_model()
         st.session_state.model_loaded = True
-    else:
+        st.session_state.model_error = None
+    except Exception as error:
         st.session_state.model_loaded = False
+        st.session_state.model_error = str(error)
 
 if 'current_tab' not in st.session_state:
     st.session_state.current_tab = "单张图片分类"
@@ -116,8 +160,10 @@ st.markdown("<h1 class='main-header'>CIFAR-100 图像分类应用</h1>", unsafe_
 
 # 如果模型未加载，显示错误信息
 if 'model_loaded' in st.session_state and not st.session_state.model_loaded:
-    st.error("模型文件未找到，请确保 'best_model.pth' 文件存在于应用目录中。")
-    st.warning("请下载模型文件并将其放置在应用根目录下，然后刷新页面。")
+    st.error("模型下载或加载失败。")
+    if st.session_state.get('model_error'):
+        st.code(st.session_state.model_error)
+    st.warning("请稍后刷新重试；模型权重也可以从项目的 GitHub Release 手动下载。")
     st.stop()
 
 # 根据当前选择的标签显示内容 - 改进显示逻辑
@@ -319,4 +365,4 @@ st.markdown("""
 </table>
 <div class="footer-copyright">© 2025 CIFAR-100 分类应用 | v1.0.0</div>
 """, unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True) 
+st.markdown('</div>', unsafe_allow_html=True)

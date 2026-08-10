@@ -8,9 +8,9 @@
 
 | 内容 | 地址 | 说明 |
 | --- | --- | --- |
-| 在线演示 | [Streamlit Community Cloud](https://dream-ten.streamlit.app/) | 免费实例长时间无访问会休眠，进入后可手动唤醒 |
+| 在线演示 | Streamlit Community Cloud（重新部署中） | 免费实例长时间无访问会休眠，进入后可手动唤醒 |
 | 训练源码与日志 | [Kaggle Notebook](https://www.kaggle.com/code/hepingyang/cifar-100-convnext-vit-hybrid-classifier) | 可查看模型结构、训练策略、运行日志与版本记录 |
-| 模型权重 | [Kaggle Output](https://www.kaggle.com/code/hepingyang/cifar-100-convnext-vit-hybrid-classifier/output) | `best_model.pth`，约 455.4 MB |
+| 模型权重 | [GitHub Release](https://github.com/718232157/CIFAR-100/releases/tag/v1.0.0) / [Kaggle Output](https://www.kaggle.com/code/hepingyang/cifar-100-convnext-vit-hybrid-classifier/output) | `best_model.pth`，约 455.4 MB |
 
 ## 模型与训练
 
@@ -86,13 +86,13 @@ pip install -r requirements.txt
 
 ### 3. 下载模型权重
 
-从 [Kaggle Output](https://www.kaggle.com/code/hepingyang/cifar-100-convnext-vit-hybrid-classifier/output) 下载 `best_model.pth`，放到项目根目录。也可以使用 Kaggle CLI：
+应用首次启动时会从 [GitHub Release](https://github.com/718232157/CIFAR-100/releases/tag/v1.0.0) 自动下载并校验 `best_model.pth`。也可以从 [Kaggle Output](https://www.kaggle.com/code/hepingyang/cifar-100-convnext-vit-hybrid-classifier/output) 手动下载到项目根目录，或使用 Kaggle CLI：
 
 ```bash
 kaggle kernels output hepingyang/cifar-100-convnext-vit-hybrid-classifier -p .
 ```
 
-仓库使用 Git LFS 记录模型文件，但当前 GitHub LFS 下载不可用，因此推荐从 Kaggle 获取完整权重。普通 Git 克隆得到的 `best_model.pth` 可能只是 LFS 指针文件。
+仓库使用 Git LFS 记录模型文件，但当前 GitHub LFS 下载不可用。普通 Git 克隆得到的 `best_model.pth` 可能只是 LFS 指针文件，应用会自动识别并从 Release 获取经过 SHA-256 校验的完整权重。
 
 ### 4. 启动应用
 

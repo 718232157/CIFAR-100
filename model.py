@@ -8,6 +8,7 @@ from PIL import Image
 import io
 import functools
 import time
+import gc
 
 # CIFAR-100类别名称
 CIFAR100_CLASSES = [
@@ -90,7 +91,10 @@ def load_model(model_path, device=None):
     
     # 加载模型权重
     try:
-        model.load_state_dict(torch.load(model_path, map_location=device))
+        state_dict = torch.load(model_path, map_location=device)
+        model.load_state_dict(state_dict)
+        del state_dict
+        gc.collect()
         print("模型加载成功!")
     except Exception as e:
         print(f"模型加载失败: {str(e)}")
@@ -213,4 +217,4 @@ def batch_predict(model, images, device, top_k=5, batch_size=16):
         
         results.extend(batch_results)
     
-    return results 
+    return results
