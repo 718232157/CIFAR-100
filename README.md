@@ -9,8 +9,8 @@
 | 内容 | 地址 | 说明 |
 | --- | --- | --- |
 | 在线演示 | [Streamlit Community Cloud](https://dream-ten.streamlit.app/) | 免费实例长时间无访问会休眠，进入后可手动唤醒 |
-| 训练源码与日志 | [Kaggle Notebook](https://www.kaggle.com/code/hepingyang/pjone-sort-vit) | 可查看模型结构、训练策略、运行日志与版本记录 |
-| 模型权重 | [Kaggle Output](https://www.kaggle.com/code/hepingyang/pjone-sort-vit/output) | `best_model.pth`，约 455.4 MB |
+| 训练源码与日志 | [Kaggle Notebook](https://www.kaggle.com/code/hepingyang/cifar-100-convnext-vit-hybrid-classifier) | 可查看模型结构、训练策略、运行日志与版本记录 |
+| 模型权重 | [Kaggle Output](https://www.kaggle.com/code/hepingyang/cifar-100-convnext-vit-hybrid-classifier/output) | `best_model.pth`，约 455.4 MB |
 
 ## 模型与训练
 
@@ -20,7 +20,7 @@
 - **Vision Transformer 分支**：使用 12 层、12 头 Transformer 建模全局信息。
 - **结果融合层**：拼接两路 100 类分类输出，通过包含 BatchNorm、GELU 与 Dropout 的 MLP 生成最终预测。
 
-这里采用的是分类结果层融合，而不是简单宣称“特征融合”。完整实现可在 [`model.py`](./model.py) 和公开的 [Kaggle Notebook](https://www.kaggle.com/code/hepingyang/pjone-sort-vit) 中查看。
+这里采用的是分类结果层融合，而不是简单宣称“特征融合”。完整实现可在 [`model.py`](./model.py) 和公开的 [Kaggle Notebook](https://www.kaggle.com/code/hepingyang/cifar-100-convnext-vit-hybrid-classifier) 中查看。
 
 ### 训练策略
 
@@ -86,10 +86,10 @@ pip install -r requirements.txt
 
 ### 3. 下载模型权重
 
-从 [Kaggle Output](https://www.kaggle.com/code/hepingyang/pjone-sort-vit/output) 下载 `best_model.pth`，放到项目根目录。也可以使用 Kaggle CLI：
+从 [Kaggle Output](https://www.kaggle.com/code/hepingyang/cifar-100-convnext-vit-hybrid-classifier/output) 下载 `best_model.pth`，放到项目根目录。也可以使用 Kaggle CLI：
 
 ```bash
-kaggle kernels output hepingyang/pjone-sort-vit -p .
+kaggle kernels output hepingyang/cifar-100-convnext-vit-hybrid-classifier -p .
 ```
 
 仓库使用 Git LFS 记录模型文件，但当前 GitHub LFS 下载不可用，因此推荐从 Kaggle 获取完整权重。普通 Git 克隆得到的 `best_model.pth` 可能只是 LFS 指针文件。
